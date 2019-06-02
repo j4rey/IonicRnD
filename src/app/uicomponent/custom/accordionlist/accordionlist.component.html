@@ -1,0 +1,46 @@
+
+<ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>
+        Accordion List
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+<ion-content>
+
+<ion-list *ngFor="let item of data; let i = index;" class="accordion-list" lines="none" detail="false" no-padding>
+  <ion-item tappable (click)="toggleSection(i)" [ngClass]="{'section-active':item.open, 'section': !item.open}">
+    <ion-icon slot="start" name="arrow-forward" *ngIf="!item.open; else arrowdown"></ion-icon>
+    <ng-template #arrowdown>
+      <ion-icon slot="start" name="arrow-down"></ion-icon>
+    </ng-template>
+    <ion-label>
+      {{item.name}}
+    </ion-label>
+  </ion-item>
+  <!--First Nested Item-->
+  <div *ngIf="item.children && item.open">
+    <ion-list *ngFor="let child of item.children; let j = index;" lines="none" class="child-list">
+      <ion-item tappable (click)="toggleItem(i,j)" *ngIf="child.children" [ngClass]="{'child-active':child.open, 'child': !child.open}">
+        <ion-icon slot="start" name="add" *ngIf="!child.open; else arrowdown"></ion-icon>
+        <ng-template #arrowdown>
+          <ion-icon slot="start" name="close"></ion-icon>
+        </ng-template>
+        <ion-label>
+          {{child.name}}
+        </ion-label>
+      </ion-item>
+      <app-accordionitem [item]="child" *ngIf="!child.children"></app-accordionitem>
+      <ion-list *ngIf="child.children && child.open" class="product-list" lines="none">
+        <app-accordionitem [item]="childitem" *ngFor="let childitem of child.children"></app-accordionitem>
+      </ion-list>
+    </ion-list>
+  </div>
+  <!--First Nested Item-->
+</ion-list>
+
+</ion-content>

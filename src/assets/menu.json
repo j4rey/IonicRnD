@@ -1,0 +1,62 @@
+[
+    {
+      "title": "Home",
+      "url": "/home",
+      "icon": "home",
+      "open": false
+    },
+    {
+      "title": "List",
+      "url": "/list",
+      "icon": "list",
+      "open": false,
+      "children": [
+        {
+          "title": "Home",
+          "url": "/home",
+          "icon": "home",
+          "open": false
+        }
+      ]
+    },
+    {
+      "title": "Components",
+      "url": "/uicomponents",
+      "icon": "cube",
+      "open": false,
+      "children": [
+        {
+          "title": "Output",
+          "url": "/uicomponents/outputcomponents",
+          "icon": "list",
+          "open": false
+        },
+        {
+          "title": "Layout",
+          "url": "/uicomponents/layoutcomponents",
+          "icon": "list",
+          "open": false
+        },
+        {
+          "title": "Input",
+          "url": "/uicomponents/inputcomponents",
+          "icon": "list",
+          "open": false
+        },
+        {
+          "title": "Custom",
+          "url": "/uicomponents/customcomponents",
+          "icon": "list",
+          "open": false,
+          "children": [
+            {
+              "title": "AccordionList",
+              "url": "/uicomponents/customcomponents/accordionlist",
+              "icon": "list",
+              "open": false
+            }
+          ]
+        }
+      ]
+    }
+  ]

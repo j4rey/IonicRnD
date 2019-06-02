@@ -1,21 +1,49 @@
 <ion-app>
   <ion-split-pane>
-    <ion-menu>
+    <ion-menu menuId="nav">
       <ion-header>
         <ion-toolbar>
           <ion-title>Menu</ion-title>
         </ion-toolbar>
       </ion-header>
       <ion-content>
-        <ion-list>
-          <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
-            <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">
-              <ion-icon slot="start" [name]="p.icon"></ion-icon>
-              <ion-label>
-                {{p.title}}
-              </ion-label>
-            </ion-item>
-          </ion-menu-toggle>
+        <ion-list *ngFor="let item of appPages; let i = index">
+          <!-- <ion-menu-toggle auto-hide="false" [routerDirection]="'root'" [routerLink]="[p.url]"> -->
+
+          <ion-item tappable (click)="gotoRoute(item.url)">
+            <ion-icon slot="start" [name]="item.icon" ></ion-icon>
+            <ion-label>{{item.title}}</ion-label>
+            <ng-container *ngIf="item.children">
+              <ion-icon slot="end" name="arrow-dropright" *ngIf="!item.open" (click)="toggleSection(i)"></ion-icon>
+              <ion-icon slot="end" name="arrow-dropdown" *ngIf="item.open" (click)="toggleSection(i)"></ion-icon>
+            </ng-container>
+          </ion-item>
+
+          <div *ngIf="item.children && item.open">
+            <ion-list *ngFor="let child of item.children; let j = index;" lines="none" class="child-list">
+
+              <ion-item tappable (click)="gotoRoute(child.url)" *ngIf="child.children"
+                [ngClass]="{'child-active':child.open, 'child': !child.open}">
+                <ion-label>{{child.title}}</ion-label>
+                <ion-icon slot="end" name="arrow-dropright" *ngIf="!child.open" (click)="toggleItem(i,j)" ></ion-icon>
+                <ion-icon slot="end" name="arrow-dropdown" *ngIf="child.open" (click)="toggleItem(i,j)" ></ion-icon>
+              </ion-item>
+
+              <ion-item tappable *ngIf="!child.children" class="child-item" text-wrap detail="false" lines="none" (click)="gotoRoute(child.url)">
+                <ion-label>{{child.title}}</ion-label>
+              </ion-item>
+
+              <ion-list *ngIf="child.children && child.open" class="product-list" lines="none">
+                <ion-item *ngFor="let childitem of child.children" class="child-item" text-wrap detail="false"
+                  lines="none" (click)="gotoRoute(childitem.url)">
+                  <ion-label>
+                    {{childitem.title}}
+                  </ion-label>
+                </ion-item>
+              </ion-list>
+            </ion-list>
+          </div>
+          <!-- </ion-menu-toggle> -->
         </ion-list>
       </ion-content>
     </ion-menu>
